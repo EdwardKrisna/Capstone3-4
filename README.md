@@ -30,6 +30,43 @@ The Daegu real estate market faces significant challenges:
 - Hyperparameter Tuning
 - Model Evaluation and Interpretation (using SHAP values)
 
+# Daegu Apartment Price Prediction Project
+
+[Business Background, Problem Statement, and Project Goals sections remain unchanged]
+
+## Methodology
+
+- Data Collection and Preprocessing
+- Exploratory Data Analysis (EDA)
+- Feature Engineering
+- Model Selection and Training (XGBoost chosen as the final model)
+- Hyperparameter Tuning
+- Model Evaluation and Interpretation (using SHAP values)
+
+## Setup and Usage
+
+### Prerequisites
+- Python 3.x
+- Required libraries: pandas, numpy, scikit-learn, xgboost, shap
+
+### Data Preprocessing
+Before running the model, it's crucial to preprocess the data using the `SubwayDataCleaner()` function. This step ensures that the data is properly cleaned and formatted for accurate predictions.
+
+```python
+from sklearn.base import BaseEstimator, TransformerMixin
+
+class SubwayDataCleaner(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+    
+    def transform(self, X):
+        X_ = X.copy()
+        if 'SubwayStation' in X_.columns and 'TimeToSubway' in X_.columns:
+            mask = (X_['SubwayStation'] == 'no_subway_nearby') & (X_['TimeToSubway'] != 'no_bus_stop_nearby')
+            X_.loc[mask, 'TimeToSubway'] = 'no_bus_stop_nearby'
+        return X_
+```
+
 ## Key Findings
 
 1. **Model Performance**: Achieved 84.35% accuracy (R² score) in predicting apartment prices.
